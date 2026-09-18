@@ -1,0 +1,5 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# All package metadata and dependencies are declared in setup.py.
