@@ -1,8 +1,6 @@
 """Experiment configuration as pure Python dataclasses.
 
-No YAML files: every default lives here, and `src/train.py` lets you
-override individual values with CLI flags.
-"""
+
 
 from __future__ import annotations
 
