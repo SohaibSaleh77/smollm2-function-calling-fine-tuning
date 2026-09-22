@@ -22,7 +22,7 @@ dataset, then measures whether the model:
 smollm2-function-calling-fine-tuning/
 ├── README.md               # this file
 ├── .gitignore              # ignores checkpoints, caches, venvs, ...
-├── setup.py                # package setup: dependencies, metadata
+├── setup.py                # package setup: dependencies, resolving packages conflicts 
 ├── pyproject.toml          # minimal build-system shim for setup.py
 ├── requirements.txt        # flat dependency list (mirrors setup.py)
 ├── scripts/
@@ -44,7 +44,7 @@ smollm2-function-calling-fine-tuning/
 cd smollm2-function-calling-fine-tuning
 
 # 1) Install dependencies via setup.py (PyTorch must match your CUDA build!)
-python scripts/setup_env.py
+python scripts/setup_env.py t
 
 # 2) Smoke test (a few steps, small sample)
 python -m src.train --max-steps 20 --sample-size 2000 --skip-baseline
@@ -59,7 +59,7 @@ python -m src.merge_lora --adapter ./smollm2-glaive-fc-final --output ./smollm2-
 python -m src.inference
 ```
 
-> `scripts/setup_env.py` exists because the notebook's `!pip install ...`
+> `scripts/setup_env.py` exists to solve dependency conflicts i got during experiment 
 > lines are IPython magic and are a **syntax error** in plain `.py` files.
 
 ## Using the published adapter
