@@ -73,9 +73,7 @@ def main() -> None:
     # ---------------------------------------------------------
     train_dataset, val_dataset, test_dataset = load_and_prepare_datasets(cfg)
 
-    # ---------------------------------------------------------
-    # 2. MODEL & TOKENIZER INITIALIZATION
-    # ---------------------------------------------------------
+        # MODEL & TOKENIZER INITIALIZATION
     tokenizer = load_tokenizer(cfg.model_id, padding_side="right")
 
     model = AutoModelForCausalLM.from_pretrained(
@@ -85,9 +83,7 @@ def main() -> None:
         dtype=torch.bfloat16,
     )
 
-    # ---------------------------------------------------------
-    # 3. PRE-TRAINING BASELINE EVALUATION (ON TEST SET)
-    # ---------------------------------------------------------
+    # # ---------------------------------------------------------
     if not args.skip_baseline:
         model.config.use_cache = True
         evaluate_function_calling(
@@ -104,9 +100,7 @@ def main() -> None:
     model.config.use_cache = False
     model = prepare_model_for_kbit_training(model)
 
-    # ---------------------------------------------------------
-    # 4. TRAINING CONFIGURATION & EXECUTION
-    # ---------------------------------------------------------
+    
     lora_config = LoraConfig(
         r=cfg.lora.r,
         lora_alpha=cfg.lora.lora_alpha,
@@ -155,9 +149,9 @@ def main() -> None:
     trainer.save_model(cfg.paths.final_dir)
     tokenizer.save_pretrained(cfg.paths.final_dir)
 
-    # ---------------------------------------------------------
-    # 5. POST-TRAINING EVALUATION (ON TEST SET)
-    # ---------------------------------------------------------
+    # ----------------------------
+    #  POST-TRAINING EVALUATION (ON TEST SET)
+    
     del trainer, model
     torch.cuda.empty_cache()
 
@@ -181,9 +175,9 @@ def main() -> None:
     del eval_model
     torch.cuda.empty_cache()
 
-    # ---------------------------------------------------------
-    # 6. MERGE WEIGHTS AND SAVE THE STANDALONE MODEL
-    # ---------------------------------------------------------
+
+    # finally MERGE WEIGHTS AND SAVE THE STANDALONE MODEL
+
     merge_and_save_lora(cfg.paths.final_dir, cfg.paths.merged_dir)
 
 
