@@ -1,6 +1,5 @@
 """QLoRA fine-tuning of SmolLM2-1.7B-Instruct on glaive-function-calling-v2.
-
-Pipeline (mirrors the original Colab notebook):
+:
     1. Load + parse the multi-turn glaive dataset (train/val/test splits).
     2. Load the base model in 4-bit NF4.
     3. Run a PRE-TRAINING baseline evaluation on the blind test set.
